@@ -1,6 +1,7 @@
 package com.example.myreminder.pages.add
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.myreminder.core.domain.model.Reminder
 import com.example.myreminder.core.domain.repository.ReminderRepository
 import com.example.myreminder.utils.ReminderDummy
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +21,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.times
 import org.mockito.junit.MockitoJUnitRunner
+import java.util.Date
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -53,8 +55,18 @@ class AddReminderViewModelTest {
     @Test
     fun `when add reminder Should call insert reminder repository`() = runTest {
         val reminder = dummyReminder[0]
-        viewModel.addReminder(reminder)
-        Mockito.verify(reminderRepository, times(1)).insertReminder(reminder)
+        val id = Date().time.toInt()
+        viewModel.addReminder(id, reminder.title, reminder.description, "2023-10-11", "12:22")
+
+        Mockito.verify(reminderRepository, times(1)).insertReminder(Reminder(id, reminder.title, reminder.description, "2023-10-11 12:22"))
+    }
+
+    @Test
+    fun `when add incomplete reminder Shouldn't call insert reminder repository`() = runTest {
+        val reminder = dummyReminder[0]
+        val id = Date().time.toInt()
+        viewModel.addReminder(id, reminder.title, reminder.description, "2023-10-11", "Pilih Waktu")
+        Mockito.verify(reminderRepository, times(0)).insertReminder(reminder)
     }
 }
 
