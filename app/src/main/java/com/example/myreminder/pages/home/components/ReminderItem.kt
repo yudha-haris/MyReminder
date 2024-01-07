@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.myreminder.core.domain.model.Reminder
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -34,6 +35,9 @@ fun ReminderItem(
     val hour = dateTime.substring(11)
     val day = locale.dayOfWeek.name.substring(0, 3)
     val date = dateTime.substring(8, 10)
+
+    val now = LocalDateTime.now()
+    val isPast = now.compareTo(locale) > 0;
 
 
     Row(
@@ -74,7 +78,7 @@ fun ReminderItem(
         ) {
 
             Box(
-                modifier = modifier.background(color = Color.Blue)
+                modifier = modifier.background(color = if (isPast) Color.Red else Color.Blue)
             ) {
                 Column(
                     Modifier.padding(16.dp)
