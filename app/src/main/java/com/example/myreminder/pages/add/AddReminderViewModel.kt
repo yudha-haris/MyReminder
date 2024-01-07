@@ -1,6 +1,5 @@
 package com.example.myreminder.pages.add
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myreminder.core.domain.model.Reminder
 import com.example.myreminder.core.domain.repository.ReminderRepository

@@ -43,7 +43,7 @@ class HomeViewModel(private val reminderRepository: ReminderRepository) : ViewMo
         return@map result
     }
 
-    private fun fetchNewReminder() = viewModelScope.launch {
+    fun fetchNewReminder() = viewModelScope.launch {
         reminderRepository.fetchReminder()
     }
 }
