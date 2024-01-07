@@ -165,22 +165,15 @@ fun AddReminderPage(
 
                     Button(
                         onClick = {
-
-                            if (title.isEmpty() || description.isEmpty() || time == "Pilih Waktu" || date == "Pilih Tanggal") {
-                                Toast.makeText(context, "Lengkapi Data Terlebih Dahulu!", Toast.LENGTH_SHORT)
-                                    .show()
-                            } else {
-                                val now = Date()
-                                val reminder = Reminder(
-                                    id = now.time.toInt(),
-                                    title = title,
-                                    description = description,
-                                    dateTime = "$date $time"
-                                )
-                                viewModel.addReminder(reminder)
+                            val now = Date()
+                            val isSuccess = viewModel.addReminder(now.time.toInt(), title, description, date, time)
+                            if(isSuccess) {
                                 Toast.makeText(context, "Pengingat berhasil ditambahkan", Toast.LENGTH_SHORT)
                                     .show()
                                 navController.navigate(Page.Home.route)
+                            } else {
+                                Toast.makeText(context, "Lengkapi Data Terlebih Dahulu!", Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         },
                         modifier = Modifier

@@ -20,24 +20,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.myreminder.core.domain.model.Reminder
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Date
+import com.example.myreminder.core.utils.DateUtils
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ReminderItem(
     id: Int, name: String, description: String, dateTime: String, modifier: Modifier = Modifier
 ) {
-    val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-    val locale = LocalDateTime.parse(dateTime, inputFormatter)
+    val locale = DateUtils.convertToDateTime(dateTime)
 
     val hour = dateTime.substring(11)
     val day = locale.dayOfWeek.name.substring(0, 3)
     val date = dateTime.substring(5, 10)
 
-    val now = LocalDateTime.now()
-    val isPast = now > locale;
+    val isPast = DateUtils.isPast(dateTime);
 
 
     Row(
