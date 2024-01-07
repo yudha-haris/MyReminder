@@ -1,13 +1,16 @@
 package com.example.myreminder.pages.add
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -15,6 +18,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -65,12 +69,14 @@ fun AddReminderPage(
 
     Scaffold(
         content = {
-            Column(
+            Box(
                 modifier = modifier
                     .fillMaxSize()
                     .padding(it)
                     .padding(16.dp)
             ) {
+                val context = LocalContext.current
+
                 if (openTime.value) {
                     showTimePickerDialog(onCancel = {
                         openTime.value = false
@@ -156,36 +162,39 @@ fun AddReminderPage(
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
-                }
-            }
-        },
-        floatingActionButton = {
-            val context = LocalContext.current
 
-            FloatingActionButton(
-                onClick = {
-                    if (title.isEmpty() || description.isEmpty() || time == "Pilih Waktu" || date == "Pilih Tanggal") {
-                        Toast.makeText(context, "Lengkapi Data Terlebih Dahulu!", Toast.LENGTH_SHORT)
-                            .show()
-                    } else {
-                        val now = Date()
-                        val reminder = Reminder(
-                            id = now.time.toInt(),
-                            title = title,
-                            description = description,
-                            dateTime = "$date $time"
+                    Button(
+                        onClick = {
+
+                            if (title.isEmpty() || description.isEmpty() || time == "Pilih Waktu" || date == "Pilih Tanggal") {
+                                Toast.makeText(context, "Lengkapi Data Terlebih Dahulu!", Toast.LENGTH_SHORT)
+                                    .show()
+                            } else {
+                                val now = Date()
+                                val reminder = Reminder(
+                                    id = now.time.toInt(),
+                                    title = title,
+                                    description = description,
+                                    dateTime = "$date $time"
+                                )
+                                viewModel.addReminder(reminder)
+                                Toast.makeText(context, "Pengingat berhasil ditambahkan", Toast.LENGTH_SHORT)
+                                    .show()
+                                navController.navigate(Page.Home.route)
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(56.dp)
+                            .background(MaterialTheme.colorScheme.primary)
+                    ) {
+                        Text(
+                            text = "Tambahkan",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
-                        viewModel.addReminder(reminder)
-                        Toast.makeText(context, "Pengingat berhasil ditambahkan", Toast.LENGTH_SHORT)
-                            .show()
-                        navController.navigate(Page.Home.route)
                     }
-                },
-                modifier = Modifier
-                    .padding(16.dp)
-                    .clip(CircleShape)
-            ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                }
             }
         },
     )

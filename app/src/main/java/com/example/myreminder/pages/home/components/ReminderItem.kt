@@ -34,7 +34,7 @@ fun ReminderItem(
 
     val hour = dateTime.substring(11)
     val day = locale.dayOfWeek.name.substring(0, 3)
-    val date = dateTime.substring(8, 10)
+    val date = dateTime.substring(5, 10)
 
     val now = LocalDateTime.now()
     val isPast = now > locale;
@@ -57,7 +57,7 @@ fun ReminderItem(
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = date,
+                text = day,
                 fontWeight = FontWeight.Medium,
                 style = MaterialTheme.typography.titleLarge.copy(),
                 modifier = Modifier
@@ -65,7 +65,7 @@ fun ReminderItem(
                     .padding(start = 16.dp)
             )
             Text(
-                text = day,
+                text = date,
                 fontWeight = FontWeight.Medium,
                 style = MaterialTheme.typography.titleMedium.copy(),
                 modifier = Modifier
@@ -78,7 +78,7 @@ fun ReminderItem(
         ) {
 
             Box(
-                modifier = modifier.background(color = if (isPast) Color.Red else Color.Blue)
+                modifier = modifier.background(color = if (isPast) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary)
             ) {
                 Column(
                     Modifier.padding(16.dp)

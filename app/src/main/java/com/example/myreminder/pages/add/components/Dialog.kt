@@ -33,17 +33,13 @@ import java.text.SimpleDateFormat
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun showDatePickerDialog(onCancel: () -> Unit, onDateSelected: (String) -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
     val datePickerState = rememberDatePickerState()
 
     DatePickerDialog(
-        onDismissRequest = {
-            openDialog.value = false
-        },
+        onDismissRequest = onCancel,
         confirmButton = {
             TextButton(
                 onClick = {
-                    openDialog.value = false
                     val selectedDateInMillis = datePickerState.selectedDateMillis;
                     val sdf = SimpleDateFormat("yyyy-MM-dd")
                     val dateString = sdf.format(selectedDateInMillis)
@@ -55,9 +51,7 @@ fun showDatePickerDialog(onCancel: () -> Unit, onDateSelected: (String) -> Unit)
         },
         dismissButton = {
             TextButton(
-                onClick = {
-                    openDialog.value = false
-                }
+                onClick = onCancel
             ) {
                 Text("CANCEL")
             }
