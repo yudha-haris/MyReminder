@@ -37,7 +37,7 @@ fun ReminderItem(
     val date = dateTime.substring(8, 10)
 
     val now = LocalDateTime.now()
-    val isPast = now.compareTo(locale) > 0;
+    val isPast = now > locale;
 
 
     Row(
