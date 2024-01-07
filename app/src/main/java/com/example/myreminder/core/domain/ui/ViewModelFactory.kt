@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myreminder.core.di.Injection
 import com.example.myreminder.core.domain.repository.ReminderRepository
-import com.example.myreminder.main.ReminderViewModel
+import com.example.myreminder.pages.home.HomeViewModel
 
 class ViewModelFactory private constructor(private val reminderRepository: ReminderRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -29,8 +29,8 @@ class ViewModelFactory private constructor(private val reminderRepository: Remin
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T =
         when {
-            modelClass.isAssignableFrom(ReminderViewModel::class.java) -> {
-                ReminderViewModel(reminderRepository) as T
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(reminderRepository) as T
             }
 
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
