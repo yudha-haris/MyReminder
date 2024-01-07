@@ -32,7 +32,7 @@ fun ReminderItem(
     val locale = LocalDateTime.parse(dateTime, inputFormatter)
 
     val hour = dateTime.substring(11)
-    val day = locale.dayOfWeek.name
+    val day = locale.dayOfWeek.name.substring(0, 3)
     val date = dateTime.substring(8, 10)
 
 

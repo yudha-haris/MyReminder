@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myreminder.core.navigation.Page
 import com.example.myreminder.pages.add.AddReminderPage
+import com.example.myreminder.pages.add.AddReminderViewModel
 import com.example.myreminder.pages.home.HomePage
 import com.example.myreminder.pages.home.HomeViewModel
 
@@ -19,15 +20,20 @@ import com.example.myreminder.pages.home.HomeViewModel
 @Composable
 fun MyReminderApp(
     homeViewModel: HomeViewModel,
+    addReminderViewModel: AddReminderViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
     NavHost(navController = navController, startDestination = Page.Home.route) {
         composable(Page.Home.route) {
-            HomePage(viewModel = homeViewModel, navController)
+            HomePage(viewModel = homeViewModel, navController, modifier)
         }
         composable(Page.Add.route) {
-            AddReminderPage(navController = navController)
+            AddReminderPage(
+                viewModel = addReminderViewModel,
+                navController = navController,
+                modifier = modifier
+            )
         }
     }
 
