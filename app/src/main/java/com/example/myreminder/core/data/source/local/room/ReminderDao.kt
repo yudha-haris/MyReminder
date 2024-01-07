@@ -15,7 +15,10 @@ interface ReminderDao {
     fun getAllReminder(): LiveData<List<ReminderEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertReminder(reminderList: List<ReminderEntity>)
+    fun insertAllReminder(reminderList: List<ReminderEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertReminder(reminder: ReminderEntity)
 
     @Delete
     fun deleteReminder(reminder: ReminderEntity)
