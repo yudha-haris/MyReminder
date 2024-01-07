@@ -2,7 +2,7 @@ package com.example.myreminder.pages.add
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.myreminder.core.domain.repository.ReminderRepository
-import com.example.myreminder.pages.home.utils.ReminderDummy
+import com.example.myreminder.utils.ReminderDummy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestDispatcher

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.myreminder.core.domain.model.Reminder
 import com.example.myreminder.core.domain.repository.ReminderRepository
-import com.example.myreminder.pages.home.utils.ReminderDummy
+import com.example.myreminder.utils.ReminderDummy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestDispatcher

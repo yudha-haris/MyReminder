@@ -1,4 +1,4 @@
-package com.example.myreminder.pages.home.utils
+package com.example.myreminder.utils
 
 import com.example.myreminder.core.domain.model.Reminder
 
