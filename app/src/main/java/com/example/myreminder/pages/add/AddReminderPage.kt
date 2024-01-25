@@ -13,14 +13,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -32,15 +29,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.myreminder.R
-import com.example.myreminder.core.domain.model.Reminder
 import com.example.myreminder.core.navigation.Page
+import com.example.myreminder.core.utils.AlarmReceiver
 import com.example.myreminder.pages.add.components.showDatePickerDialog
 import com.example.myreminder.pages.add.components.showTimePickerDialog
 import java.util.Date
@@ -168,6 +164,8 @@ fun AddReminderPage(
                             val now = Date()
                             val isSuccess = viewModel.addReminder(now.time.toInt(), title, description, date, time)
                             if(isSuccess) {
+                                val alarmReceiver = AlarmReceiver()
+                                alarmReceiver.setOneTimeAlarm(context, date, time, description, title)
                                 Toast.makeText(context, "Pengingat berhasil ditambahkan", Toast.LENGTH_SHORT)
                                     .show()
                                 navController.navigate(Page.Home.route)

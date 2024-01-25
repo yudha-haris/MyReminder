@@ -9,8 +9,6 @@ import com.example.myreminder.core.domain.model.Reminder
 import com.example.myreminder.core.domain.repository.ReminderRepository
 import com.example.myreminder.core.utils.DateUtils
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class HomeViewModel(private val reminderRepository: ReminderRepository) : ViewModel() {
 
