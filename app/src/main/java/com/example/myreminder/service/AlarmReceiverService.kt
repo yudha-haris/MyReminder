@@ -1,4 +1,4 @@
-package com.example.myreminder.core.utils
+package com.example.myreminder.service
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -6,8 +6,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import com.example.myreminder.core.utils.DateUtils
 
-class AlarmReceiver : BroadcastReceiver() {
+class AlarmReceiverService : BroadcastReceiver() {
 
     fun setOneTimeAlarm(
         context: Context,
@@ -17,7 +18,7 @@ class AlarmReceiver : BroadcastReceiver() {
         title: String,
     ) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, AlarmReceiver::class.java)
+        val intent = Intent(context, AlarmReceiverService::class.java)
         intent.putExtra(EXTRA_MESSAGE, message)
         intent.putExtra(EXTRA_TITLE, title)
 
@@ -36,7 +37,7 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val message = intent.getStringExtra(EXTRA_MESSAGE)
         val title = intent.getStringExtra(EXTRA_TITLE)
-        val notification = NotificationUtils()
+        val notification = NotificationService()
         notification.showNotification(context, title ?: "", message ?: "", ID_ONETIME)
     }
 

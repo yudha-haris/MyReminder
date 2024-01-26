@@ -3,6 +3,7 @@ package com.example.myreminder
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,10 +14,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.example.myreminder.core.domain.ui.ViewModelFactory
 import com.example.myreminder.pages.add.AddReminderViewModel
 import com.example.myreminder.pages.home.HomeViewModel
+import com.example.myreminder.service.ReminderWorkerService
 import com.example.myreminder.ui.theme.MyReminderTheme
+import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
     private val homeViewModel: HomeViewModel by viewModels {
@@ -33,6 +41,8 @@ class MainActivity : ComponentActivity() {
             Toast.makeText(applicationContext, "Notification Granted", Toast.LENGTH_SHORT).show()
         }
     }
+    private lateinit var workManager: WorkManager
+    private lateinit var periodicWorkRequest: PeriodicWorkRequest
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,8 +61,32 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        askPermission()
+        initWorkManager()
+    }
+
+    private fun askPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
+    private fun initWorkManager() {
+        workManager = WorkManager.getInstance(applicationContext)
+
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        periodicWorkRequest =
+            PeriodicWorkRequest.Builder(ReminderWorkerService::class.java, 15, TimeUnit.MINUTES)
+                .setConstraints(constraints)
+                .build()
+
+        workManager.enqueue(periodicWorkRequest)
+        workManager.getWorkInfoByIdLiveData(periodicWorkRequest.id).observe(this@MainActivity) {
+            if (it.state == WorkInfo.State.ENQUEUED) {
+                homeViewModel.fetchNewReminder()
+            }
         }
     }
 }

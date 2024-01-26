@@ -35,8 +35,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.myreminder.R
-import com.example.myreminder.core.navigation.Page
-import com.example.myreminder.core.utils.AlarmReceiver
+import com.example.myreminder.pages.navigation.Page
+import com.example.myreminder.service.AlarmReceiverService
 import com.example.myreminder.pages.add.components.showDatePickerDialog
 import com.example.myreminder.pages.add.components.showTimePickerDialog
 import java.util.Date
@@ -164,8 +164,8 @@ fun AddReminderPage(
                             val now = Date()
                             val isSuccess = viewModel.addReminder(now.time.toInt(), title, description, date, time)
                             if(isSuccess) {
-                                val alarmReceiver = AlarmReceiver()
-                                alarmReceiver.setOneTimeAlarm(context, date, time, description, title)
+                                val alarmReceiverService = AlarmReceiverService()
+                                alarmReceiverService.setOneTimeAlarm(context, date, time, description, title)
                                 Toast.makeText(context, "Pengingat berhasil ditambahkan", Toast.LENGTH_SHORT)
                                     .show()
                                 navController.navigate(Page.Home.route)

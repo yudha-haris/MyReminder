@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.myreminder.core.navigation.Page
+import com.example.myreminder.pages.navigation.Page
 import com.example.myreminder.pages.home.components.ReminderItem
 import com.example.myreminder.ui.theme.MyReminderTheme
 
@@ -37,7 +37,7 @@ fun HomePage(
     Scaffold(
         content = { innerPadding ->
             LazyColumn(
-                modifier = Modifier
+                modifier = modifier
                     .padding(innerPadding)
                     .padding(16.dp)
             ) {
