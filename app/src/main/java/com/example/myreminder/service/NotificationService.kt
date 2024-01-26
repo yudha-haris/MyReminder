@@ -1,4 +1,4 @@
-package com.example.myreminder.core.utils
+package com.example.myreminder.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,7 +7,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.example.myreminder.R
 
-class NotificationUtils {
+class NotificationService {
     fun showNotification(
         context: Context,
         title: String,

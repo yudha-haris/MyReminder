@@ -9,7 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.myreminder.core.navigation.Page
+import com.example.myreminder.pages.navigation.Page
 import com.example.myreminder.pages.add.AddReminderPage
 import com.example.myreminder.pages.add.AddReminderViewModel
 import com.example.myreminder.pages.home.HomePage
