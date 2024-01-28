@@ -1,4 +1,4 @@
-package com.example.myreminder.core.domain.mapper
+package com.example.myreminder.core.utils
 
 import com.example.myreminder.core.data.source.local.entity.ReminderEntity
 import com.example.myreminder.core.data.source.remote.response.TodosItem

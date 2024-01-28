@@ -1,4 +1,4 @@
-package com.example.myreminder.pages.add.components
+package com.example.myreminder.presentation.add.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -26,10 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import java.text.SimpleDateFormat
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun showDatePickerDialog(onCancel: () -> Unit, onDateSelected: (String) -> Unit) {
+fun ShowDatePickerDialog(onCancel: () -> Unit, onDateSelected: (String) -> Unit) {
     val datePickerState = rememberDatePickerState()
 
     DatePickerDialog(
@@ -37,8 +38,8 @@ fun showDatePickerDialog(onCancel: () -> Unit, onDateSelected: (String) -> Unit)
         confirmButton = {
             TextButton(
                 onClick = {
-                    val selectedDateInMillis = datePickerState.selectedDateMillis;
-                    val sdf = SimpleDateFormat("yyyy-MM-dd")
+                    val selectedDateInMillis = datePickerState.selectedDateMillis
+                    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                     val dateString = sdf.format(selectedDateInMillis)
                     onDateSelected(dateString)
                 }
@@ -62,7 +63,7 @@ fun showDatePickerDialog(onCancel: () -> Unit, onDateSelected: (String) -> Unit)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun showTimePickerDialog(
+fun ShowTimePickerDialog(
     title: String = "Select Time",
     onCancel: () -> Unit,
     onConfirm: (String) -> Unit,
@@ -109,9 +110,9 @@ fun showTimePickerDialog(
                     ) { Text("Cancel") }
                     TextButton(
                         onClick = {
-                            var hourRaw = state.hour;
-                            val minRaw = state.minute;
-                            var hour = hourRaw.toString();
+                            val hourRaw = state.hour
+                            val minRaw = state.minute
+                            var hour = hourRaw.toString()
                             if (hourRaw < 10) {
                                 hour = "0${hourRaw}"
                             }

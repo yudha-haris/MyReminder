@@ -1,4 +1,4 @@
-package com.example.myreminder.pages.add
+package com.example.myreminder.presentation.add
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -35,10 +35,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.myreminder.R
-import com.example.myreminder.pages.navigation.Page
-import com.example.myreminder.service.AlarmReceiverService
-import com.example.myreminder.pages.add.components.showDatePickerDialog
-import com.example.myreminder.pages.add.components.showTimePickerDialog
+import com.example.myreminder.core.data.receiver.AlarmReceiver
+import com.example.myreminder.presentation.add.components.ShowDatePickerDialog
+import com.example.myreminder.presentation.add.components.ShowTimePickerDialog
+import com.example.myreminder.presentation.navigation.Page
 import java.util.Date
 
 
@@ -74,7 +74,7 @@ fun AddReminderPage(
                 val context = LocalContext.current
 
                 if (openTime.value) {
-                    showTimePickerDialog(onCancel = {
+                    ShowTimePickerDialog(onCancel = {
                         openTime.value = false
                     }, onConfirm = { value ->
                         time = value
@@ -83,7 +83,7 @@ fun AddReminderPage(
                 }
 
                 if (openDate.value) {
-                    showDatePickerDialog(onCancel = {
+                    ShowDatePickerDialog(onCancel = {
                         openDate.value = false
                     }) { selectedDate ->
                         date = selectedDate
@@ -164,7 +164,7 @@ fun AddReminderPage(
                             val now = Date()
                             val isSuccess = viewModel.addReminder(now.time.toInt(), title, description, date, time)
                             if(isSuccess) {
-                                val alarmReceiverService = AlarmReceiverService()
+                                val alarmReceiverService = AlarmReceiver()
                                 alarmReceiverService.setOneTimeAlarm(context, date, time, description, title)
                                 Toast.makeText(context, "Pengingat berhasil ditambahkan", Toast.LENGTH_SHORT)
                                     .show()

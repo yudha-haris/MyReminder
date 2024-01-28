@@ -1,7 +1,5 @@
-package com.example.myreminder.pages.home.components
+package com.example.myreminder.presentation.home.components
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.example.myreminder.core.domain.model.Reminder
 import com.example.myreminder.core.utils.DateUtils
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun ReminderItem(
     id: Int, name: String, description: String, dateTime: String, modifier: Modifier = Modifier
@@ -33,7 +31,7 @@ fun ReminderItem(
     val day = locale.dayOfWeek.name.substring(0, 3)
     val date = dateTime.substring(5, 10)
 
-    val isPast = DateUtils.isPast(dateTime);
+    val isPast = DateUtils.isPast(dateTime)
 
 
     Row(
@@ -41,7 +39,7 @@ fun ReminderItem(
             .padding(bottom = 16.dp)
             .fillMaxWidth()
             .clickable {
-                var reminder: Reminder =
+                var reminder =
                     Reminder(id = id, title = name, description = description, dateTime = dateTime)
             }
     ) {
