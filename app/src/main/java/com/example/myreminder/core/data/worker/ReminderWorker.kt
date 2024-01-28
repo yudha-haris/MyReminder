@@ -1,10 +1,10 @@
-package com.example.myreminder.service
+package com.example.myreminder.core.data.worker
 
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 
-class ReminderWorkerService(
+class ReminderWorker(
     context: Context,
     workerParameters: WorkerParameters,
 ) : Worker(context, workerParameters) {

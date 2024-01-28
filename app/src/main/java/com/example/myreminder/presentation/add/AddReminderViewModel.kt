@@ -1,10 +1,10 @@
-package com.example.myreminder.pages.add
+package com.example.myreminder.presentation.add
 
 import androidx.lifecycle.ViewModel
 import com.example.myreminder.core.domain.model.Reminder
-import com.example.myreminder.core.domain.repository.ReminderRepository
+import com.example.myreminder.core.domain.usecase.ReminderUseCase
 
-class AddReminderViewModel(private val reminderRepository: ReminderRepository) : ViewModel() {
+class AddReminderViewModel(private val reminderUseCase: ReminderUseCase) : ViewModel() {
     fun addReminder(id: Int, title: String, description: String, date: String, time: String) : Boolean {
         if(title.isEmpty() || description.isEmpty() || time == "Pilih Waktu" || date == "Pilih Tanggal") {
             return false
@@ -15,7 +15,7 @@ class AddReminderViewModel(private val reminderRepository: ReminderRepository) :
             description = description,
             dateTime = "$date $time"
         )
-        reminderRepository.insertReminder(reminder)
+        reminderUseCase.insertReminder(reminder)
         return true
     }
 }

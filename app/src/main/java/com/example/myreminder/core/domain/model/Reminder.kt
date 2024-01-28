@@ -1,7 +1,6 @@
 package com.example.myreminder.core.domain.model
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

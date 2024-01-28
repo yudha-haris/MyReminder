@@ -3,13 +3,11 @@ package com.example.myreminder
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -19,10 +17,10 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.example.myreminder.core.domain.ui.ViewModelFactory
-import com.example.myreminder.pages.add.AddReminderViewModel
-import com.example.myreminder.pages.home.HomeViewModel
-import com.example.myreminder.service.ReminderWorkerService
+import com.example.myreminder.core.data.worker.ReminderWorker
+import com.example.myreminder.core.ui.ViewModelFactory
+import com.example.myreminder.presentation.add.AddReminderViewModel
+import com.example.myreminder.presentation.home.HomeViewModel
 import com.example.myreminder.ui.theme.MyReminderTheme
 import java.util.concurrent.TimeUnit
 
@@ -44,7 +42,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var workManager: WorkManager
     private lateinit var periodicWorkRequest: PeriodicWorkRequest
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -78,14 +76,14 @@ class MainActivity : ComponentActivity() {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
         periodicWorkRequest =
-            PeriodicWorkRequest.Builder(ReminderWorkerService::class.java, 15, TimeUnit.MINUTES)
+            PeriodicWorkRequest.Builder(ReminderWorker::class.java, 15, TimeUnit.MINUTES)
                 .setConstraints(constraints)
                 .build()
 
         workManager.enqueue(periodicWorkRequest)
         workManager.getWorkInfoByIdLiveData(periodicWorkRequest.id).observe(this@MainActivity) {
             if (it.state == WorkInfo.State.ENQUEUED) {
-                homeViewModel.fetchNewReminder()
+                homeViewModel.getReminder()
             }
         }
     }

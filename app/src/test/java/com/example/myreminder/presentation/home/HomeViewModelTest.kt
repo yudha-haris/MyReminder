@@ -1,20 +1,21 @@
-package com.example.myreminder.pages.home
+package com.example.myreminder.presentation.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.example.myreminder.core.data.source.Resource
 import com.example.myreminder.core.domain.model.Reminder
-import com.example.myreminder.core.domain.repository.ReminderRepository
+import com.example.myreminder.core.domain.usecase.ReminderUseCase
 import com.example.myreminder.utils.ReminderDummy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -31,7 +32,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class HomeViewModelTest {
 
     @Mock
-    private lateinit var reminderRepository: ReminderRepository
+    private lateinit var reminderUseCase: ReminderUseCase
     private lateinit var homeViewModel: HomeViewModel
     private val dummyReminder = ReminderDummy.generateReminderDummy()
 
@@ -40,10 +41,14 @@ class HomeViewModelTest {
 
     @Before
     fun setUp() {
-        homeViewModel = HomeViewModel(reminderRepository)
+        val expectedUseCase: Flow<Resource<List<Reminder>>> =
+            flowOf(Resource.Success(dummyReminder))
+        `when`(reminderUseCase.getAllReminder()).thenReturn(expectedUseCase)
+
+        homeViewModel = HomeViewModel(reminderUseCase)
     }
 
-    val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
+    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
 
     @Before
     fun setupDispatcher() {
@@ -57,27 +62,17 @@ class HomeViewModelTest {
 
     @Test
     fun `when Get Reminder Should Not Null and Return Success`() = runTest {
-        val observer = Observer<List<Reminder>> {}
+        val observer = Observer<Resource<List<Reminder>>> {}
 
         try {
-            val expectedReminder = MutableLiveData<List<Reminder>>()
-
-            expectedReminder.value = dummyReminder
-            `when`(reminderRepository.getAllReminder()).thenReturn(expectedReminder)
-
             val actualReminder = homeViewModel.getReminder().observeForever(observer)
-            Mockito.verify(reminderRepository).getAllReminder()
+            Mockito.verify(reminderUseCase, times(2)).getAllReminder()
 
-            Assert.assertNotNull(actualReminder)
+            assertNotNull(actualReminder)
 
         } finally {
             homeViewModel.getReminder().removeObserver(observer)
         }
-    }
-
-    @Test
-    fun `when init Should call fetchReminder repository`() = runTest {
-        Mockito.verify(reminderRepository, times(1)).fetchReminder()
     }
 
 }

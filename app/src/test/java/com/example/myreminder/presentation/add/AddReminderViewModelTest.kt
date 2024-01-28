@@ -1,8 +1,8 @@
-package com.example.myreminder.pages.add
+package com.example.myreminder.presentation.add
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.myreminder.core.domain.model.Reminder
-import com.example.myreminder.core.domain.repository.ReminderRepository
+import com.example.myreminder.core.domain.usecase.ReminderUseCase
 import com.example.myreminder.utils.ReminderDummy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,7 +28,7 @@ import java.util.Date
 class AddReminderViewModelTest {
 
     @Mock
-    private lateinit var reminderRepository: ReminderRepository
+    private lateinit var reminderUseCase: ReminderUseCase
     private lateinit var viewModel: AddReminderViewModel
     private val dummyReminder = ReminderDummy.generateReminderDummy()
 
@@ -37,7 +37,7 @@ class AddReminderViewModelTest {
 
     @Before
     fun setUp() {
-        viewModel = AddReminderViewModel(reminderRepository)
+        viewModel = AddReminderViewModel(reminderUseCase)
     }
 
     val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
@@ -53,20 +53,20 @@ class AddReminderViewModelTest {
     }
 
     @Test
-    fun `when add reminder Should call insert reminder repository`() = runTest {
+    fun `when add reminder Should call insert reminder use case`() = runTest {
         val reminder = dummyReminder[0]
         val id = Date().time.toInt()
         viewModel.addReminder(id, reminder.title, reminder.description, "2023-10-11", "12:22")
 
-        Mockito.verify(reminderRepository, times(1)).insertReminder(Reminder(id, reminder.title, reminder.description, "2023-10-11 12:22"))
+        Mockito.verify(reminderUseCase, times(1)).insertReminder(Reminder(id, reminder.title, reminder.description, "2023-10-11 12:22"))
     }
 
     @Test
-    fun `when add incomplete reminder Shouldn't call insert reminder repository`() = runTest {
+    fun `when add incomplete reminder Shouldn't call insert reminder use case`() = runTest {
         val reminder = dummyReminder[0]
         val id = Date().time.toInt()
         viewModel.addReminder(id, reminder.title, reminder.description, "2023-10-11", "Pilih Waktu")
-        Mockito.verify(reminderRepository, times(0)).insertReminder(reminder)
+        Mockito.verify(reminderUseCase, times(0)).insertReminder(reminder)
     }
 }
 

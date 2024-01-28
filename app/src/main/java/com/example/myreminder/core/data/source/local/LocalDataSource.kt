@@ -1,8 +1,8 @@
 package com.example.myreminder.core.data.source.local
 
-import androidx.lifecycle.LiveData
 import com.example.myreminder.core.data.source.local.entity.ReminderEntity
 import com.example.myreminder.core.data.source.local.room.ReminderDao
+import kotlinx.coroutines.flow.Flow
 
 class LocalDataSource private constructor(private val reminderDao: ReminderDao) {
 
@@ -15,12 +15,12 @@ class LocalDataSource private constructor(private val reminderDao: ReminderDao) 
             }
     }
 
-    fun getAllReminder(): LiveData<List<ReminderEntity>> = reminderDao.getAllReminder()
+    fun getAllReminder(): Flow<List<ReminderEntity>> = reminderDao.getAllReminder()
 
-    fun insertAllReminder(reminderList: List<ReminderEntity>) =
+    suspend fun insertAllReminder(reminderList: List<ReminderEntity>) =
         reminderDao.insertAllReminder(reminderList)
 
-    fun insertReminder(reminderEntity: ReminderEntity) = reminderDao.insertReminder(reminderEntity)
+    suspend fun insertReminder(reminderEntity: ReminderEntity) = reminderDao.insertReminder(reminderEntity)
 
     fun deleteReminder(reminderEntity: ReminderEntity) = reminderDao.deleteReminder(reminderEntity)
 }

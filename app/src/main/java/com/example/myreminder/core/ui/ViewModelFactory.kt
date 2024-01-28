@@ -1,14 +1,14 @@
-package com.example.myreminder.core.domain.ui
+package com.example.myreminder.core.ui
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myreminder.core.di.Injection
-import com.example.myreminder.core.domain.repository.ReminderRepository
-import com.example.myreminder.pages.add.AddReminderViewModel
-import com.example.myreminder.pages.home.HomeViewModel
+import com.example.myreminder.core.domain.usecase.ReminderUseCase
+import com.example.myreminder.presentation.add.AddReminderViewModel
+import com.example.myreminder.presentation.home.HomeViewModel
 
-class ViewModelFactory private constructor(private val reminderRepository: ReminderRepository) :
+class ViewModelFactory private constructor(private val reminderUseCase: ReminderUseCase) :
     ViewModelProvider.NewInstanceFactory() {
 
     companion object {
@@ -20,7 +20,7 @@ class ViewModelFactory private constructor(private val reminderRepository: Remin
                 ?: synchronized(this) {
                     instance
                         ?: ViewModelFactory(
-                            Injection.provideRepository(
+                            Injection.provideReminderUseCase(
                                 context
                             )
                         )
@@ -31,10 +31,10 @@ class ViewModelFactory private constructor(private val reminderRepository: Remin
     override fun <T : ViewModel> create(modelClass: Class<T>): T =
         when {
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                HomeViewModel(reminderRepository) as T
+                HomeViewModel(reminderUseCase) as T
             }
             modelClass.isAssignableFrom(AddReminderViewModel::class.java) -> {
-                AddReminderViewModel(reminderRepository) as T
+                AddReminderViewModel(reminderUseCase) as T
             }
 
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)

@@ -1,4 +1,4 @@
-package com.example.myreminder.pages.navigation
+package com.example.myreminder.presentation.navigation
 
 sealed class Page(val route: String) {
     data object Home : Page("home")
