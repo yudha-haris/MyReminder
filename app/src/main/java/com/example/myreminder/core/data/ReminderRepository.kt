@@ -58,23 +58,7 @@ class ReminderRepository(
                 val sorted = domain.sortedBy { item ->
                     DateUtils.convertToDateTime(item.dateTime)
                 }
-                val result = ArrayList<Reminder>()
-
-                val active = ArrayList<Reminder>()
-                val inactive = ArrayList<Reminder>()
-                sorted.forEach { item ->
-                    val isPast = DateUtils.isPast(item.dateTime)
-                    if (isPast) {
-                        inactive.add(item)
-                    } else {
-                        active.add(item)
-                    }
-                }
-
-                result.addAll(inactive)
-                result.addAll(active)
-
-                val entities = ReminderMapper.mapDomainToEntities(result)
+                val entities = ReminderMapper.mapDomainToEntities(sorted)
                 localDataSource.insertAllReminder(entities)
             }
 
