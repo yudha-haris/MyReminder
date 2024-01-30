@@ -1,6 +1,8 @@
 package com.example.myreminder.presentation.home
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,7 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -35,10 +36,16 @@ fun HomePage(
 
     Scaffold(
         content = { innerPadding ->
-            when(data) {
+            when (data) {
                 is Resource.Error -> {}
                 is Resource.Loading -> {
-                    CircularProgressIndicator()
+                    Box(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                    ) {
+                        CircularProgressIndicator()
+                    }
                 }
                 is Resource.Success -> {
                     LazyColumn(
@@ -71,8 +78,6 @@ fun HomePage(
         },
     )
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
 
 @Preview(showBackground = true)
 @Composable
