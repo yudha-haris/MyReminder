@@ -16,4 +16,8 @@ class ReminderWorker(
         return resultStatus as Result
     }
 
+    companion object {
+        const val WORKER_NAME = "Reminder Worker"
+    }
+
 }

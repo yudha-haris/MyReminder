@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkInfo
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var workManager: WorkManager
     private lateinit var periodicWorkRequest: PeriodicWorkRequest
 
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -79,8 +80,11 @@ class MainActivity : ComponentActivity() {
             PeriodicWorkRequest.Builder(ReminderWorker::class.java, 15, TimeUnit.MINUTES)
                 .setConstraints(constraints)
                 .build()
-
-        workManager.enqueue(periodicWorkRequest)
+        workManager.enqueueUniquePeriodicWork(
+            ReminderWorker.WORKER_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            periodicWorkRequest
+        )
         workManager.getWorkInfoByIdLiveData(periodicWorkRequest.id).observe(this@MainActivity) {
             if (it.state == WorkInfo.State.ENQUEUED) {
                 homeViewModel.getReminder()
