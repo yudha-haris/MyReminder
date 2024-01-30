@@ -21,18 +21,6 @@ class ReminderRepository(
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) : IReminderRepository {
-    companion object {
-        @Volatile
-        private var instance: ReminderRepository? = null
-
-        fun getInstance(
-            remoteDataSource: RemoteDataSource,
-            localDataSource: LocalDataSource,
-            appExecutors: AppExecutors
-        ): ReminderRepository = instance ?: synchronized(this) {
-            instance ?: ReminderRepository(remoteDataSource, localDataSource, appExecutors)
-        }
-    }
 
     override fun insertReminder(reminder: Reminder) {
         val entity = ReminderMapper.mapDomainToEntity(reminder)

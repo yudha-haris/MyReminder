@@ -4,16 +4,7 @@ import com.example.myreminder.core.data.source.local.entity.ReminderEntity
 import com.example.myreminder.core.data.source.local.room.ReminderDao
 import kotlinx.coroutines.flow.Flow
 
-class LocalDataSource private constructor(private val reminderDao: ReminderDao) {
-
-    companion object {
-        private var instance: LocalDataSource? = null
-
-        fun getInstance(reminderDao: ReminderDao): LocalDataSource =
-            instance ?: synchronized(this) {
-                instance ?: LocalDataSource(reminderDao)
-            }
-    }
+class LocalDataSource(private val reminderDao: ReminderDao) {
 
     fun getAllReminder(): Flow<List<ReminderEntity>> = reminderDao.getAllReminder()
 
