@@ -8,17 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-class RemoteDataSource private constructor(private val apiService: ApiService) {
-
-    companion object {
-        @Volatile
-        private var instace: RemoteDataSource? = null
-
-        fun getInstance(service: ApiService): RemoteDataSource =
-            instace ?: synchronized(this) {
-                instace ?: RemoteDataSource(service)
-            }
-    }
+class RemoteDataSource(private val apiService: ApiService) {
 
     fun getAllReminder(): Flow<ApiResponse<List<TodosItem>>> {
         return flow {

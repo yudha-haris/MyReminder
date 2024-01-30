@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -19,19 +18,15 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.example.myreminder.core.data.worker.ReminderWorker
-import com.example.myreminder.core.ui.ViewModelFactory
 import com.example.myreminder.presentation.add.AddReminderViewModel
 import com.example.myreminder.presentation.home.HomeViewModel
 import com.example.myreminder.ui.theme.MyReminderTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
-    private val homeViewModel: HomeViewModel by viewModels {
-        ViewModelFactory.getInstance(this)
-    }
-    private val addReminderViewModel: AddReminderViewModel by viewModels {
-        ViewModelFactory.getInstance(this)
-    }
+    private val homeViewModel: HomeViewModel by viewModel()
+    private val addReminderViewModel: AddReminderViewModel by viewModel()
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
