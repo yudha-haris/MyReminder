@@ -1,4 +1,4 @@
-package com.example.myreminder.core.di
+package com.example.myreminder.di
 
 import com.example.myreminder.core.domain.usecase.ReminderInteractor
 import com.example.myreminder.core.domain.usecase.ReminderUseCase

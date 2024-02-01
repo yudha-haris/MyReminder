@@ -30,7 +30,7 @@ class ReminderRepository(
     }
 
     override fun getAllReminder(): Flow<Resource<List<Reminder>>> =
-        object : NetworkBoundResource<List<Reminder>, List<TodosItem>>() {
+        object : com.example.myreminder.core.data.NetworkBoundResource<List<Reminder>, List<TodosItem>>() {
             override fun loadFromDB(): Flow<List<Reminder>> {
                 return localDataSource.getAllReminder().map {
                     ReminderMapper.mapEntitiesToDomain(it)

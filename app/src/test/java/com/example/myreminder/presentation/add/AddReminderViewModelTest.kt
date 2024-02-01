@@ -1,6 +1,7 @@
 package com.example.myreminder.presentation.add
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.myreminder.presentation.add.AddReminderViewModel
 import com.example.myreminder.core.domain.model.Reminder
 import com.example.myreminder.core.domain.usecase.ReminderUseCase
 import com.example.myreminder.utils.ReminderDummy

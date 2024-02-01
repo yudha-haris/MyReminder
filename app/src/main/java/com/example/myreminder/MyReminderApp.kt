@@ -10,7 +10,7 @@ import com.example.myreminder.presentation.add.AddReminderPage
 import com.example.myreminder.presentation.add.AddReminderViewModel
 import com.example.myreminder.presentation.home.HomePage
 import com.example.myreminder.presentation.home.HomeViewModel
-import com.example.myreminder.presentation.navigation.Page
+import com.example.myreminder.navigation.Page
 
 @Composable
 fun MyReminderApp(
