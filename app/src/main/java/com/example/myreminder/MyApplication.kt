@@ -4,8 +4,8 @@ import android.app.Application
 import com.example.myreminder.core.di.databaseModule
 import com.example.myreminder.core.di.networkModule
 import com.example.myreminder.core.di.repositoryModule
-import com.example.myreminder.core.di.useCaseModule
-import com.example.myreminder.core.di.viewModelModule
+import com.example.myreminder.di.useCaseModule
+import com.example.myreminder.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

@@ -38,7 +38,7 @@ import com.example.myreminder.R
 import com.example.myreminder.core.data.receiver.AlarmReceiver
 import com.example.myreminder.presentation.add.components.ShowDatePickerDialog
 import com.example.myreminder.presentation.add.components.ShowTimePickerDialog
-import com.example.myreminder.presentation.navigation.Page
+import com.example.myreminder.navigation.Page
 import java.util.Date
 
 

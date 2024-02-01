@@ -51,5 +51,11 @@ val repositoryModule = module {
     single { LocalDataSource(get()) }
     single { RemoteDataSource(get()) }
     single { AppExecutors() }
-    single<IReminderRepository> { ReminderRepository(get(), get(), get()) }
+    single<IReminderRepository> {
+        com.example.myreminder.core.data.ReminderRepository(
+            get(),
+            get(),
+            get()
+        )
+    }
 }
