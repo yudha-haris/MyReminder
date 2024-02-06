@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "My Reminder"
 include(":app")
 include(":core")
+include(":reminder")

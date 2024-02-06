@@ -1,32 +1,28 @@
 package com.example.myreminder
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import com.example.myreminder.core.data.worker.ReminderWorker
-import com.example.myreminder.presentation.add.AddReminderViewModel
-import com.example.myreminder.presentation.home.HomeViewModel
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.myreminder.ui.theme.MyReminderTheme
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
-    private val homeViewModel: HomeViewModel by viewModel()
-    private val addReminderViewModel: AddReminderViewModel by viewModel()
 
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -35,8 +31,6 @@ class MainActivity : ComponentActivity() {
             Toast.makeText(applicationContext, "Notification Granted", Toast.LENGTH_SHORT).show()
         }
     }
-    private lateinit var workManager: WorkManager
-    private lateinit var periodicWorkRequest: PeriodicWorkRequest
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,15 +42,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyReminderApp(
-                        homeViewModel = homeViewModel,
-                        addReminderViewModel = addReminderViewModel
+                    OnboardingScreen(
+                        onStart = {
+                            val uri = Uri.parse("myreminder://reminder")
+                            startActivity(Intent(Intent.ACTION_VIEW, uri))
+                        }
                     )
                 }
             }
         }
         askPermission()
-        initWorkManager()
     }
 
     private fun askPermission() {
@@ -65,25 +60,26 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun initWorkManager() {
-        workManager = WorkManager.getInstance(applicationContext)
 
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-        periodicWorkRequest =
-            PeriodicWorkRequest.Builder(ReminderWorker::class.java, 15, TimeUnit.MINUTES)
-                .setConstraints(constraints)
-                .build()
-        workManager.enqueueUniquePeriodicWork(
-            ReminderWorker.WORKER_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
-            periodicWorkRequest
-        )
-        workManager.getWorkInfoByIdLiveData(periodicWorkRequest.id).observe(this@MainActivity) {
-            if (it.state == WorkInfo.State.ENQUEUED) {
-                homeViewModel.getReminder()
+}
+
+@Preview()
+@Composable
+fun OnboardingScreen(
+    onStart: () -> Unit = {}
+) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Column(
+            modifier = Modifier.align(alignment = Alignment.Center)
+        ) {
+            Button(onClick = {
+                onStart()
+            }) {
+                Text(text = "Mulai")
             }
         }
     }
 }
+
