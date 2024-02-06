@@ -1,7 +1,6 @@
 package com.example.myreminder.core.di
 
 import androidx.room.Room
-import com.example.myreminder.core.data.ReminderRepository
 import com.example.myreminder.core.data.source.local.LocalDataSource
 import com.example.myreminder.core.data.source.local.room.ReminderDatabase
 import com.example.myreminder.core.data.source.remote.RemoteDataSource
