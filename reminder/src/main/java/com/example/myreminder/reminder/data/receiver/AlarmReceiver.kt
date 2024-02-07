@@ -10,8 +10,8 @@ import android.content.Intent
 import android.os.Build
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
-import com.example.myreminder.core.R
 import com.example.myreminder.core.utils.DateUtils
+import com.example.myreminder.reminder.R
 
 class AlarmReceiver : BroadcastReceiver() {
 

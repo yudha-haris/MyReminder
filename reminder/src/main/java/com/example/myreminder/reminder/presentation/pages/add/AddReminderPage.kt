@@ -34,7 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.myreminder.R
+import com.example.myreminder.reminder.R
 import com.example.myreminder.reminder.data.receiver.AlarmReceiver
 import com.example.myreminder.reminder.presentation.navigation.Page
 import com.example.myreminder.reminder.presentation.pages.add.components.ShowDatePickerDialog

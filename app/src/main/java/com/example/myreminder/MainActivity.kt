@@ -2,7 +2,6 @@ package com.example.myreminder
 
 import android.Manifest
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -15,6 +14,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.myreminder.design_system.ui.theme.MyReminderTheme
 import com.example.myreminder.presentation.onboarding.OnboardingScreen
+import com.example.myreminder.reminder.ReminderActivity
 
 class MainActivity : ComponentActivity() {
 
@@ -38,8 +38,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     OnboardingScreen(
                         onStart = {
-                            val uri = Uri.parse("myreminder://reminder")
-                            startActivity(Intent(Intent.ACTION_VIEW, uri))
+                            val intent = Intent(this@MainActivity, ReminderActivity::class.java)
+                            startActivity(intent)
                         }
                     )
                 }

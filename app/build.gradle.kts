@@ -51,10 +51,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    dynamicFeatures += setOf(":reminder")
 }
 
 dependencies {
     implementation(project(":design_system"))
+    implementation(project(":reminder"))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }
