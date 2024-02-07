@@ -40,6 +40,7 @@ fun OnboardingScreen(
                 brush = Brush.verticalGradient(
                     colors = listOf(
                         Color(red = 44, green = 96, blue = 168),
+                        Color.White,
                         Color.White
                     )
                 )
@@ -49,7 +50,7 @@ fun OnboardingScreen(
             modifier = Modifier.align(alignment = Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             Image(
                 painter = painterResource(id = R.drawable.baseline_android_24),
                 contentDescription = "App Logo",
@@ -87,7 +88,7 @@ fun OnboardingScreen(
             ) {
                 Text(text = "Mulai")
             }
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
         }
     }
