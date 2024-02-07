@@ -24,9 +24,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myreminder.R
-import com.example.myreminder.ui.theme.Typography
-import com.example.myreminder.ui.theme.blue900
-import com.example.myreminder.ui.theme.primaryBlue
+import com.example.myreminder.design_system.ui.theme.blue900
+import com.example.myreminder.design_system.ui.theme.primaryBlue
+import com.example.myreminder.design_system.ui.theme.Typography
 
 @Preview()
 @Composable

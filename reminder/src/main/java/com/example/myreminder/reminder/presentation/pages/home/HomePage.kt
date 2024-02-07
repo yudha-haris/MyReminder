@@ -22,9 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.myreminder.core.data.Resource
+import com.example.myreminder.design_system.ui.theme.MyReminderTheme
 import com.example.myreminder.reminder.presentation.navigation.Page
 import com.example.myreminder.reminder.presentation.pages.home.components.ReminderItem
-import com.example.myreminder.ui.theme.MyReminderTheme
 
 
 @Composable

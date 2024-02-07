@@ -17,3 +17,4 @@ rootProject.name = "My Reminder"
 include(":app")
 include(":core")
 include(":reminder")
+include(":design_system")

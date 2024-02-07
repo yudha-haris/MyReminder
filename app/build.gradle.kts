@@ -55,5 +55,6 @@ android {
 }
 
 dependencies {
+    implementation(project(":design_system"))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }

@@ -1,22 +1,20 @@
 plugins {
-    id("com.android.dynamic-feature")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-parcelize")
     id("com.google.devtools.ksp")
 }
 
 apply(from = "../shared_dependencies.gradle")
 
 android {
-    namespace = "com.example.myreminder.reminder"
+    namespace = "com.example.myreminder.design_system"
     compileSdk = 34
 
     defaultConfig {
         minSdk = 24
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -28,30 +26,21 @@ android {
             )
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
     buildFeatures {
-        viewBinding = true
         compose = true
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.3"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":app"))
-    implementation(project(":design_system"))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }

@@ -15,6 +15,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.example.myreminder.design_system.ui.theme.MyReminderTheme
 import com.example.myreminder.reminder.data.worker.ReminderWorker
 import com.example.myreminder.reminder.di.databaseModule
 import com.example.myreminder.reminder.di.networkModule
@@ -23,7 +24,6 @@ import com.example.myreminder.reminder.di.useCaseModule
 import com.example.myreminder.reminder.di.viewModelModule
 import com.example.myreminder.reminder.presentation.pages.add.AddReminderViewModel
 import com.example.myreminder.reminder.presentation.pages.home.HomeViewModel
-import com.example.myreminder.reminder.ui.theme.MyReminderTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 import java.util.concurrent.TimeUnit
