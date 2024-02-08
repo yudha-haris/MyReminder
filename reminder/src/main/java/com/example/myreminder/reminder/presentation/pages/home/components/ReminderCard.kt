@@ -1,15 +1,12 @@
 package com.example.myreminder.reminder.presentation.pages.home.components
 
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,9 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,7 +32,7 @@ import com.example.myreminder.design_system.ui.theme.blue400
 
 
 @Composable
-fun ReminderItem(
+fun ReminderCard(
     id: Int, name: String, description: String, dateTime: String, modifier: Modifier = Modifier
 ) {
     val locale = DateUtils.convertToDateTime(dateTime)
@@ -139,17 +134,17 @@ fun ReminderItem(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFAFAFA)
 @Composable
-fun ReminderItemPreview() {
+fun ReminderCardPreview() {
     Column(
         modifier = Modifier.padding(24.dp)
     ) {
-        ReminderItem(
+        ReminderCard(
             id = 1,
             name = "Olahraga",
             description = "Jogging bareng",
             dateTime = "2024-02-12 20:50",
         )
-        ReminderItem(
+        ReminderCard(
             id = 0,
             name = "Olahraga",
             description = "Jogging bareng",

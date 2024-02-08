@@ -3,7 +3,6 @@ package com.example.myreminder.reminder.presentation.pages.home
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,10 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.myreminder.core.data.Resource
-import com.example.myreminder.design_system.ui.theme.MyReminderTheme
 import com.example.myreminder.reminder.domain.model.Reminder
 import com.example.myreminder.reminder.presentation.navigation.Page
-import com.example.myreminder.reminder.presentation.pages.home.components.ReminderItem
+import com.example.myreminder.reminder.presentation.pages.home.components.ReminderCard
 
 
 @Composable
@@ -64,7 +62,7 @@ fun HomePage(
                         val reminders = data.data ?: emptyList()
 
                         items(reminders, key = { it.id }) {
-                            ReminderItem(
+                            ReminderCard(
                                 id = it.id,
                                 name = it.title,
                                 description = it.description,
@@ -103,7 +101,7 @@ fun ReminderListItemPreview() {
                     .padding(24.dp)
             ) {
                 items(reminders, key = { it.id }) {
-                    ReminderItem(
+                    ReminderCard(
                         id = it.id,
                         name = it.title,
                         description = it.description,
