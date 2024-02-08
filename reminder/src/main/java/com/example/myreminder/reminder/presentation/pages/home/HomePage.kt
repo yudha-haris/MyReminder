@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.myreminder.core.data.Resource
 import com.example.myreminder.design_system.ui.theme.MyReminderTheme
+import com.example.myreminder.reminder.domain.model.Reminder
 import com.example.myreminder.reminder.presentation.navigation.Page
 import com.example.myreminder.reminder.presentation.pages.home.components.ReminderItem
 
@@ -37,27 +38,29 @@ fun HomePage(
 
     Scaffold(
         content = { innerPadding ->
-            when (data) {
-                is Resource.Error -> {}
-                is Resource.Loading -> {
-                    Box(
-                        modifier = modifier
-                            .fillMaxSize()
-                    ) {
-                        Column(
-                            modifier = Modifier.align(alignment = Alignment.Center)
-                        ) {
-                            CircularProgressIndicator()
+            LazyColumn(
+                modifier = modifier
+                    .padding(innerPadding)
+                    .padding(16.dp)
+            ) {
+                when (data) {
+                    is Resource.Error -> {}
+                    is Resource.Loading -> {
+                        item {
+                            Box(
+                                modifier = modifier
+                                    .fillMaxSize()
+                            ) {
+                                Column(
+                                    modifier = Modifier.align(alignment = Alignment.Center)
+                                ) {
+                                    CircularProgressIndicator()
+                                }
+                            }
                         }
                     }
-                }
 
-                is Resource.Success -> {
-                    LazyColumn(
-                        modifier = modifier
-                            .padding(innerPadding)
-                            .padding(16.dp)
-                    ) {
+                    is Resource.Success -> {
                         val reminders = data.data ?: emptyList()
 
                         items(reminders, key = { it.id }) {
@@ -66,12 +69,12 @@ fun HomePage(
                                 name = it.title,
                                 description = it.description,
                                 dateTime = it.dateTime,
-                                modifier = Modifier.fillMaxWidth()
                             )
                         }
                     }
                 }
             }
+
 
         },
         floatingActionButton = {
@@ -84,43 +87,35 @@ fun HomePage(
     )
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun ReminderListItemPreview() {
-    MyReminderTheme {
-        Scaffold(
-            content = {
-                Column(
-                    modifier = Modifier
-                        .padding(it)
-                        .padding(16.dp)
-                ) {
-                    ReminderItem(
-                        id = 0,
-                        name = "Olahraga",
-                        description = "Jogging bareng",
-                        dateTime = "2024-01-12 20:50"
-                    )
-                    ReminderItem(
-                        id = 0,
-                        name = "Olahraga",
-                        description = "Jogging bareng",
-                        dateTime = "2024-01-12 20:50"
-                    )
-                    ReminderItem(
-                        id = 0,
-                        name = "Olahraga",
-                        description = "Jogging bareng",
-                        dateTime = "2024-01-12 20:50"
-                    )
-                }
-            },
-            floatingActionButton = {
-                FloatingActionButton(onClick = {}, modifier = Modifier.padding(16.dp)) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add Reminder")
-                }
+    val reminders = listOf<Reminder>(
+        Reminder(0, "Olahraga", "", "2024-02-12 20:50"),
+        Reminder(1, "Jogging", "", "2020-01-12 20:50")
+    )
 
-            },
-        )
-    }
+    Scaffold(
+        content = {innerPadding ->
+            LazyColumn(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .padding(24.dp)
+            ) {
+                items(reminders, key = { it.id }) {
+                    ReminderItem(
+                        id = it.id,
+                        name = it.title,
+                        description = it.description,
+                        dateTime = it.dateTime,
+                    )
+                }
+            }
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {}, modifier = Modifier.padding(16.dp)) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Reminder")
+            }
+        },
+    )
 }

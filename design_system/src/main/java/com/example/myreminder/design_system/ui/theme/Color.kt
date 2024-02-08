@@ -14,5 +14,8 @@ val purple600 = Color(0xFF5466a6)
 
 val blue900 = Color(0xFF213555)
 val blue600 = Color(0xFF2c60a8)
+val blue400 = Color(0xFF1E81B0)
+
+val grey50 = Color(0xFFFAFAFA)
 
 val primaryBlue = Color(0xFF2c6cb4)
