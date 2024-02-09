@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.myreminder.core.data.Resource
+import com.example.myreminder.design_system.components.molecule.PrimaryTopBar
 import com.example.myreminder.design_system.ui.theme.Typography
 import com.example.myreminder.reminder.domain.model.Reminder
 import com.example.myreminder.reminder.presentation.navigation.Page
@@ -43,16 +44,7 @@ fun HomePage(
 
     Scaffold(
         topBar = {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "Reminder",
-                    style = Typography.titleLarge,
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-            }
+            PrimaryTopBar(title = "Reminder")
         },
         content = { innerPadding ->
             LazyColumn(
